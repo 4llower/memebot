@@ -138,6 +138,9 @@ dmypy.json
 cython_debug/
 
 venv
-photos
+photos/*.jpeg
+photos/*.png
+photos/*.jpg
 sessions
 memes_from_c84
+.env

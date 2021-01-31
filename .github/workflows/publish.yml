@@ -1,0 +1,33 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH Commands & Run
+        uses: fifsky/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          user: ${{ secrets.HOST_USERNAME }}
+          key: ${{ secrets.HOST_SSH_KEY }}
+          port: 22
+          args: '-tt'
+          command: |
+            cd /
+            eval `ssh-agent -s`
+            ssh-add github
+            cd /var/www/memebot
+            git fetch origin
+            git reset origin/master --hard
+
+            echo "${{ secrets.DOT_ENV }}" >> .env
+            python3 -m venv ./venv
+            source venv/bin/activate
+            pip3 install -r requirements.txt
+            python3 main.py

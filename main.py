@@ -3,9 +3,12 @@ import telebot
 import text_recognition as tr
 import database_provider as db
 import difflib
+import os
+import dotenv
 
-TOKEN = '1591401263:AAECT7GwBHbB8nrB9Ds7Q49J8LwUxbYvR68'
-bot = telebot.TeleBot(TOKEN)
+dotenv.load_dotenv()
+
+bot = telebot.TeleBot(os.getenv('TELEGRAM_TOKEN'))
 
 keyboard1 = telebot.types.ReplyKeyboardMarkup(True)
 keyboard1.row('Добавить мем', 'Найти мем(ы)', 'Настройки')
